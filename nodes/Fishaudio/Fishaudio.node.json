@@ -14,5 +14,16 @@
 				"url": "https://docs.fish.audio"
 			}
 		]
-	}
+	},
+	"alias": [
+		"TTS",
+		"text to speech",
+		"STT",
+		"speech to text",
+		"voice",
+		"audio",
+		"transcribe",
+		"voice cloning",
+		"AI voice"
+	]
 }
