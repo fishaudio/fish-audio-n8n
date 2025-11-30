@@ -3,20 +3,22 @@ import type {
 	ICredentialTestRequest,
 	ICredentialType,
 	INodeProperties,
+	Icon,
 } from 'n8n-workflow';
 
 export class FishaudioApi implements ICredentialType {
 	name = 'fishaudioApi';
 
-	displayName = 'Fishaudio API';
+	displayName = 'Fish Audio API';
 
-	// Link to your community node's README
-	documentationUrl = 'https://github.com/org/-fishaudio?tab=readme-ov-file#credentials';
+	icon: Icon = 'file:../nodes/Fishaudio/fishaudio.svg';
+
+	documentationUrl = 'https://docs.fish.audio/n8n';
 
 	properties: INodeProperties[] = [
 		{
-			displayName: 'Access Token',
-			name: 'accessToken',
+			displayName: 'API Key',
+			name: 'apiKey',
 			type: 'string',
 			typeOptions: { password: true },
 			required: true,
@@ -28,15 +30,15 @@ export class FishaudioApi implements ICredentialType {
 		type: 'generic',
 		properties: {
 			headers: {
-				Authorization: '=Bearer {{$credentials.accessToken}}',
+				Authorization: '=Bearer {{$credentials.apiKey}}',
 			},
 		},
 	};
 
 	test: ICredentialTestRequest = {
 		request: {
-			baseURL: 'https://api.fish.audio/v1',
-			url: '/v1/user',
+			baseURL: 'https://api.fish.audio',
+			url: '/wallet/self/api-credit',
 		},
 	};
 }

@@ -1,14 +1,26 @@
 {
   "name": "n8n-nodes-fishaudio",
   "version": "0.1.0",
-  "description": "",
+  "description": "The official n8n node for the Fish Audio API.",
   "license": "MIT",
-  "homepage": "",
-  "keywords": ["n8n-community-node-package"],
-  "author": { "name": "James Ding", "email": "jamesding365@gmail.com" },
+  "homepage": "https://fish.audio",
+  "keywords": [
+    "n8n-community-node-package",
+    "fish audio",
+    "fishaudio",
+    "text to speech",
+    "tts",
+    "voice cloning",
+    "voice synthesis",
+    "ai voice",
+    "speech synthesis",
+    "voice generation",
+    "n8n"
+  ],
+  "author": { "name": "James Ding", "email": "james@fish.audio" },
   "repository": {
     "type": "git",
-    "url": "https://github.com/<...>/n8n-nodes-<...>.git"
+    "url": "https://github.com/fishaudio/fish-audio-n8n.git"
   },
   "scripts": {
     "build": "n8n-node build",

@@ -4,15 +4,15 @@ import { companyDescription } from './resources/company';
 
 export class Fishaudio implements INodeType {
 	description: INodeTypeDescription = {
-		displayName: 'Fishaudio',
+		displayName: 'Fish Audio',
 		name: 'fishaudio',
 		icon: { light: 'file:fishaudio.svg', dark: 'file:fishaudio.dark.svg' },
 		group: ['transform'],
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
-		description: 'Interact with the Fishaudio API',
+		description: 'Use Fish Audio for text-to-speech and voice generation',
 		defaults: {
-			name: 'Fishaudio',
+			name: 'Fish Audio',
 		},
 		usableAsTool: true,
 		inputs: [NodeConnectionTypes.Main],
