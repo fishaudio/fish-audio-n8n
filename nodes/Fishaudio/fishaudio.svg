@@ -1,7 +1,7 @@
 <svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 333 333" width="512" height="512">
     <style>
-        .s0 { fill: #b1b3b4 }
-        .s1 { fill: #000000 }
+        .s0 { fill: #000 }
+        .s1 { fill: #000 }
     </style>
     <g id="Layer 1">
         <g id="fish">
