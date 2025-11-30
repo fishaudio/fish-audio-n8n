@@ -72,6 +72,10 @@ export class Fishaudio implements INodeType {
 			return executeSpeechGenerate.call(this, items);
 		}
 
+		if (resource === 'speech' && operation === 'transcribe') {
+			return executeSpeechTranscribe.call(this, items);
+		}
+
 		if (resource === 'account' && operation === 'getCredits') {
 			return executeAccountGetCredits.call(this);
 		}
@@ -135,6 +139,56 @@ async function executeSpeechGenerate(
 		returnData.push({
 			json: { format, voiceId, textLength: text.length },
 			binary: { [binaryPropertyName]: binaryData },
+		});
+	}
+
+	return [returnData];
+}
+
+async function executeSpeechTranscribe(
+	this: IExecuteFunctions,
+	items: INodeExecutionData[],
+): Promise<INodeExecutionData[][]> {
+	const returnData: INodeExecutionData[] = [];
+
+	for (let i = 0; i < items.length; i++) {
+		const binaryPropertyName = this.getNodeParameter('binaryPropertyName', i, 'data') as string;
+		const options = this.getNodeParameter('options', i, {}) as {
+			language?: string;
+			includeTimestamps?: boolean;
+		};
+
+		const binaryData = this.helpers.assertBinaryData(i, binaryPropertyName);
+		const audioBuffer = await this.helpers.getBinaryDataBuffer(i, binaryPropertyName);
+
+		// Build multipart form data
+		const formData = new FormData();
+		formData.append(
+			'audio',
+			new Blob([audioBuffer], { type: binaryData.mimeType || 'audio/mpeg' }),
+			binaryData.fileName || 'audio.mp3',
+		);
+
+		if (options.language) {
+			formData.append('language', options.language);
+		}
+		if (options.includeTimestamps === false) {
+			formData.append('ignore_timestamps', 'true');
+		}
+
+		const response = await this.helpers.httpRequestWithAuthentication.call(
+			this,
+			'fishaudioApi',
+			{
+				method: 'POST',
+				baseURL: API_BASE_URL,
+				url: '/v1/asr',
+				body: formData,
+			},
+		);
+
+		returnData.push({
+			json: response as IDataObject,
 		});
 	}
 
