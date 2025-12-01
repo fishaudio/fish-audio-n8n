@@ -8,9 +8,10 @@ on:
     inputs:
       release-type:
         description: 'Release type'
-        required: true
         type: choice
+        default: build-only
         options:
+          - build-only
           - patch
           - minor
           - major
@@ -38,7 +39,7 @@ jobs:
 
   release:
     needs: build
-    if: github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'workflow_dispatch' && inputs.release-type != 'build-only'
     runs-on: ubuntu-latest
     permissions:
       contents: write
