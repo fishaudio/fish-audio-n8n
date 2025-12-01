@@ -31,7 +31,7 @@
     "dev": "n8n-node dev",
     "lint": "n8n-node lint",
     "lint:fix": "n8n-node lint --fix",
-    "release": "n8n-node release",
+    "release": "release-it",
     "prepublishOnly": "n8n-node prerelease"
   },
   "files": [
@@ -49,6 +49,7 @@
   },
   "devDependencies": {
     "@n8n/node-cli": "*",
+    "@release-it/conventional-changelog": "^10.0.2",
     "@types/node": "^24.10.1",
     "eslint": "9.32.0",
     "prettier": "3.6.2",
