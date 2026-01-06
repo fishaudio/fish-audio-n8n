@@ -1,3 +1,5 @@
+![n8n.png](.github/assets/n8n.png)
+
 # n8n-nodes-fishaudio
 
 [![npm version](https://img.shields.io/npm/v/n8n-nodes-fishaudio)](https://www.npmjs.com/package/n8n-nodes-fishaudio)
