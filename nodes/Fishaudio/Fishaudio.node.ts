@@ -30,13 +30,6 @@ export class Fishaudio implements INodeType {
 		inputs: [NodeConnectionTypes.Main],
 		outputs: [NodeConnectionTypes.Main],
 		credentials: [{ name: 'fishaudioApi', required: true }],
-		requestDefaults: {
-			baseURL: API_BASE_URL,
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			},
-		},
 		properties: [
 			{
 				displayName: 'Resource',
@@ -172,6 +165,7 @@ async function executeSpeechGenerate(
 		returnData.push({
 			json: { model, format, voiceId, textLength: text.length },
 			binary: { [binaryPropertyName]: binaryData },
+			pairedItem: { item: i },
 		});
 	}
 
@@ -222,6 +216,7 @@ async function executeSpeechTranscribe(
 
 		returnData.push({
 			json: response as IDataObject,
+			pairedItem: { item: i },
 		});
 	}
 
@@ -237,7 +232,7 @@ async function executeAccountGetCredits(
 		'/wallet/self/api-credit',
 	);
 
-	return [[{ json: accountData as IDataObject }]];
+	return [[{ json: accountData as IDataObject, pairedItem: { item: 0 } }]];
 }
 
 // Voice Model Operations
@@ -286,7 +281,7 @@ async function executeVoiceModelList(
 				total: number;
 			};
 			for (const item of response.items) {
-				returnData.push({ json: item });
+				returnData.push({ json: item, pairedItem: { item: 0 } });
 			}
 			if (returnData.length >= response.total) {
 				hasMore = false;
@@ -299,7 +294,7 @@ async function executeVoiceModelList(
 			items: IDataObject[];
 		};
 		for (const item of response.items) {
-			returnData.push({ json: item });
+			returnData.push({ json: item, pairedItem: { item: 0 } });
 		}
 	}
 
@@ -314,7 +309,7 @@ async function executeVoiceModelGet(
 
 	const response = await fishAudioApiRequest.call(this, 'GET', `/model/${modelId}`);
 
-	return [[{ json: response as IDataObject }]];
+	return [[{ json: response as IDataObject, pairedItem: { item: 0 } }]];
 }
 
 async function executeVoiceModelCreate(
@@ -375,7 +370,7 @@ async function executeVoiceModelCreate(
 		},
 	);
 
-	return [[{ json: response as IDataObject }]];
+	return [[{ json: response as IDataObject, pairedItem: { item: 0 } }]];
 }
 
 async function executeVoiceModelDelete(
@@ -386,5 +381,5 @@ async function executeVoiceModelDelete(
 
 	await fishAudioApiRequest.call(this, 'DELETE', `/model/${modelId}`);
 
-	return [[{ json: { success: true, deletedModelId: modelId } }]];
+	return [[{ json: { success: true, deletedModelId: modelId }, pairedItem: { item: 0 } }]];
 }
