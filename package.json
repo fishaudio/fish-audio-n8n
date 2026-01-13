@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-fishaudio",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "The official n8n node for the Fish Audio API.",
   "license": "MIT",
   "homepage": "https://fish.audio",

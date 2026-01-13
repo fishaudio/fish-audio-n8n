@@ -1,5 +1,19 @@
 # Changelog
 
+# 0.3.0 (2026-01-13)
+
+
+### Features
+
+* add audio transcription functionality to Fishaudio node 9c9fde9
+* add Dependabot configuration for npm and GitHub Actions updates 2f206a2
+* add pairedItem to return data for various operations 8487692
+* add release configuration and update CI workflow for versioning de84eeb
+* add voice model management operations and update TTS functionality a9ca2ed
+* implement text-to-speech generation and account credit retrieval in Fishaudio node 4711489
+* improve CI/CD pipeline configuration for Node.js application 4375945
+* update release workflow to include default build-only option ae4c14c
+
 # 0.2.0 (2025-12-02)
 
 
