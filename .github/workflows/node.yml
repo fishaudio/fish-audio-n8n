@@ -62,7 +62,7 @@ jobs:
       - uses: fregante/setup-git-user@v2
 
       - name: Release
-        run: npm run release -- --ci ${{ inputs.release-type }}
+        run: npx release-it --ci ${{ inputs.release-type }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
