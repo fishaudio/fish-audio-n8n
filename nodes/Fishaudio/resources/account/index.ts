@@ -18,12 +18,6 @@ export const accountDescription: INodeProperties[] = [
 				value: 'getCredits',
 				action: 'Get API credit balance',
 				description: 'Get your current Fish Audio API credit balance',
-				routing: {
-					request: {
-						method: 'GET',
-						url: '/wallet/self/api-credit',
-					},
-				},
 			},
 		],
 		default: 'getCredits',
