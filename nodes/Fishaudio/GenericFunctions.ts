@@ -4,7 +4,9 @@ import type {
 	IHttpRequestMethods,
 	IDataObject,
 	IHttpRequestOptions,
+	JsonObject,
 } from 'n8n-workflow';
+import { NodeApiError } from 'n8n-workflow';
 
 export const API_BASE_URL = 'https://api.fish.audio';
 
@@ -39,9 +41,13 @@ export async function fishAudioApiRequest(
 		requestOptions.qs = qs;
 	}
 
-	return await this.helpers.httpRequestWithAuthentication.call(
-		this,
-		'fishaudioApi',
-		requestOptions,
-	);
+	try {
+		return await this.helpers.httpRequestWithAuthentication.call(
+			this,
+			'fishaudioApi',
+			requestOptions,
+		);
+	} catch (error) {
+		throw new NodeApiError(this.getNode(), error as JsonObject);
+	}
 }
