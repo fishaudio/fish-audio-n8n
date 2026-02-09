@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.1](https://github.com/fishaudio/fish-audio-n8n/compare/v0.3.0...v0.3.1) (2026-02-09)
+
+
+### Bug Fixes
+
+* implement requested changes for n8n public node ([#31](https://github.com/fishaudio/fish-audio-n8n/issues/31)) ([c1fdb5e](https://github.com/fishaudio/fish-audio-n8n/commit/c1fdb5e3c15259098335442f7063d95c503d0b19))
+
 # 0.3.0 (2026-01-13)
 
 
