@@ -1,5 +1,12 @@
 # Changelog
 
+# [0.4.0](https://github.com/fishaudio/fish-audio-n8n/compare/v0.3.1...v0.4.0) (2026-03-10)
+
+
+### Features
+
+* update TTS model options and set default to S2 Pro ([8c8dd21](https://github.com/fishaudio/fish-audio-n8n/commit/8c8dd21d377a7a7386ed56b77a969a8a2d2a8066))
+
 ## [0.3.1](https://github.com/fishaudio/fish-audio-n8n/compare/v0.3.0...v0.3.1) (2026-02-09)
 
 
