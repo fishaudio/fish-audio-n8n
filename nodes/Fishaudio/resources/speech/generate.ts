@@ -62,22 +62,27 @@ export const generateDescription: INodeProperties[] = [
 		displayOptions,
 		options: [
 			{
-				name: 'S1 (Recommended)',
+				name: 'S2 Pro',
+				value: 's2-pro',
+				description: 'Latest and most capable model with highest quality output',
+			},
+			{
+				name: 'S1',
 				value: 's1',
 				description: 'Most expressive model with full emotional control',
 			},
 			{
-				name: 'Speech 1.6 (Legacy)',
+				name: 'Speech 1.6 (Deprecated)',
 				value: 'speech-1.6',
-				description: 'Legacy model with basic emotion control',
+				description: 'Deprecated — requests are rerouted to the latest model',
 			},
 			{
-				name: 'Speech 1.5 (Legacy)',
+				name: 'Speech 1.5 (Deprecated)',
 				value: 'speech-1.5',
-				description: 'Legacy model, stable with least emotion variance',
+				description: 'Deprecated — requests are rerouted to the latest model',
 			},
 		],
-		default: 's1',
+		default: 's2-pro',
 		description: 'TTS model to use for speech generation',
 	},
 	{
