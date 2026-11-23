@@ -1,4 +1,7 @@
-![n8n.png](.github/assets/n8n.png)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/fishaudio/fish-audio-n8n/refs/heads/main/.github/assets/banner-dark.svg">
+  <img alt="Fish Audio n8n Integration" src="https://raw.githubusercontent.com/fishaudio/fish-audio-n8n/refs/heads/main/.github/assets/banner-light.svg">
+</picture>
 
 # n8n-nodes-fishaudio
 
