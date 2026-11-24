@@ -7,6 +7,59 @@ const displayOptions = {
 	},
 };
 
+// The Model field is declared once per node version below so that its default can
+// change for new nodes without changing the model used by saved workflows: n8n
+// does not store a parameter whose value equals the default.
+const modelProperty: INodeProperties = {
+	displayName: 'Model',
+	name: 'model',
+	type: 'options',
+	// Ordered newest to oldest rather than alphabetically, so the recommended model comes first
+	// eslint-disable-next-line n8n-nodes-base/node-param-options-type-unsorted-items
+	options: [
+		{
+			name: 'S2.1 Pro (Recommended)',
+			value: 's2.1-pro',
+			description: 'Recommended production model, with improved quality and latency over S2 Pro',
+		},
+		{
+			name: 'S2.1 Pro Free',
+			value: 's2.1-pro-free',
+			description:
+				'Same model as S2.1 Pro at no cost under fair-use limits, without latency guarantees. For testing and development.',
+		},
+		{
+			name: 'Drama 3',
+			value: 'drama-3',
+			description:
+				'Model for voice direction and content creation. Billed at a higher rate than S2.1 Pro.',
+		},
+		{
+			name: 'S2 Pro',
+			value: 's2-pro',
+			description: 'Previous-generation S2 model',
+		},
+		{
+			name: 'S1 (Retiring December 31, 2026)',
+			value: 's1',
+			description:
+				'Deprecated. After December 31, 2026, requests are served by S2.1 Pro. Uses (parenthesis) emotion tags.',
+		},
+		{
+			name: 'Speech 1.6 (Legacy)',
+			value: 'speech-1.6',
+			description: 'Deprecated since February 28, 2026. Kept so that saved workflows stay valid.',
+		},
+		{
+			name: 'Speech 1.5 (Legacy)',
+			value: 'speech-1.5',
+			description: 'Deprecated since February 28, 2026. Kept so that saved workflows stay valid.',
+		},
+	],
+	default: 's2.1-pro',
+	description: 'TTS model to use for speech generation',
+};
+
 export const generateDescription: INodeProperties[] = [
 	{
 		displayName: 'Text',
@@ -19,7 +72,7 @@ export const generateDescription: INodeProperties[] = [
 		default: '',
 		displayOptions,
 		description:
-			'The text to convert to speech. Supports emotion tags like (happy), (sad), (angry), (whispering), (laughing), (sighing), etc.',
+			'The text to convert to speech. S2 and Drama models take directions in square brackets, like [whisper], [laugh] or [excited]. S1 takes tags in parentheses, like (happy) or (whispering).',
 	},
 	{
 		displayName: 'Voice',
@@ -56,34 +109,14 @@ export const generateDescription: INodeProperties[] = [
 		],
 	},
 	{
-		displayName: 'Model',
-		name: 'model',
-		type: 'options',
-		displayOptions,
-		options: [
-			{
-				name: 'S2 Pro',
-				value: 's2-pro',
-				description: 'Latest and most capable model with highest quality output',
-			},
-			{
-				name: 'S1',
-				value: 's1',
-				description: 'Most expressive model with full emotional control',
-			},
-			{
-				name: 'Speech 1.6 (Deprecated)',
-				value: 'speech-1.6',
-				description: 'Deprecated — requests are rerouted to the latest model',
-			},
-			{
-				name: 'Speech 1.5 (Deprecated)',
-				value: 'speech-1.5',
-				description: 'Deprecated — requests are rerouted to the latest model',
-			},
-		],
+		...modelProperty,
 		default: 's2-pro',
-		description: 'TTS model to use for speech generation',
+		displayOptions: { show: { ...displayOptions.show, '@version': [1] } },
+	},
+	{
+		...modelProperty,
+		default: 's2.1-pro',
+		displayOptions: { show: { ...displayOptions.show, '@version': [{ _cnd: { gte: 1.1 } }] } },
 	},
 	{
 		displayName: 'Output Format',
