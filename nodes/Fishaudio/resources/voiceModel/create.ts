@@ -35,6 +35,13 @@ export const createDescription: INodeProperties[] = [
 		displayOptions,
 		options: [
 			{
+				displayName: 'Cover Image Field',
+				name: 'coverImageField',
+				type: 'string',
+				default: '',
+				description: 'The name of the binary field containing a cover image (optional)',
+			},
+			{
 				displayName: 'Description',
 				name: 'description',
 				type: 'string',
@@ -45,16 +52,11 @@ export const createDescription: INodeProperties[] = [
 				description: 'Description of the voice model',
 			},
 			{
-				displayName: 'Visibility',
-				name: 'visibility',
-				type: 'options',
-				options: [
-					{ name: 'Private', value: 'private' },
-					{ name: 'Public', value: 'public' },
-					{ name: 'Unlisted', value: 'unlisted' },
-				],
-				default: 'private',
-				description: 'Who can see and use this voice model',
+				displayName: 'Enhance Audio Quality',
+				name: 'enhanceAudioQuality',
+				type: 'boolean',
+				default: true,
+				description: 'Whether to clean up the voice samples before creating the voice model',
 			},
 			{
 				displayName: 'Tags',
@@ -64,11 +66,17 @@ export const createDescription: INodeProperties[] = [
 				description: 'Tags for categorization (comma-separated)',
 			},
 			{
-				displayName: 'Cover Image Field',
-				name: 'coverImageField',
-				type: 'string',
-				default: '',
-				description: 'The name of the binary field containing a cover image (optional)',
+				displayName: 'Visibility',
+				name: 'visibility',
+				type: 'options',
+				options: [
+					{ name: 'Private', value: 'private' },
+					{ name: 'Public', value: 'public' },
+					{ name: 'Unlisted', value: 'unlist' },
+				],
+				default: 'private',
+				description:
+					'Who can see and use this voice model. Public requests are created as private; publish a voice from the Fish Audio website.',
 			},
 		],
 	},
