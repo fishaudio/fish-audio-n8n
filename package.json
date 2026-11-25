@@ -48,7 +48,7 @@
     ]
   },
   "devDependencies": {
-    "@n8n/node-cli": "*",
+    "@n8n/node-cli": "^0.58.5",
     "@release-it/conventional-changelog": "^10.0.2",
     "@types/node": "^24.10.1",
     "eslint": "9.39.2",

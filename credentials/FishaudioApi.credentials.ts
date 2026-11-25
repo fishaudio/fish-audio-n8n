@@ -11,7 +11,10 @@ export class FishaudioApi implements ICredentialType {
 
 	displayName = 'Fish Audio API';
 
-	icon: Icon = 'file:../nodes/Fishaudio/fishaudio.svg';
+	icon: Icon = {
+		light: 'file:../nodes/Fishaudio/fishaudio.svg',
+		dark: 'file:../nodes/Fishaudio/fishaudio.dark.svg',
+	};
 
 	documentationUrl = 'https://docs.fish.audio/n8n';
 

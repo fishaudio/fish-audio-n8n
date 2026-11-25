@@ -1,4 +1,5 @@
 import {
+	NodeApiError,
 	NodeConnectionTypes,
 	NodeOperationError,
 	type IDataObject,
@@ -130,7 +131,12 @@ export class Fishaudio implements INodeType {
 					});
 					continue;
 				}
-				throw error;
+				// Keep errors that already carry n8n context; wrap anything else so it shows the item.
+				const nodeError =
+					error instanceof NodeApiError || error instanceof NodeOperationError
+						? error
+						: new NodeOperationError(this.getNode(), error as Error, { itemIndex: i });
+				throw nodeError;
 			}
 		}
 
