@@ -37,6 +37,13 @@ jobs:
       - name: Run build
         run: npm run build
 
+      # The previous package name gets a "this package has moved" notice. Lint and build it too.
+      - name: Lint and build under the previous package name
+        run: |
+          node scripts/set-package-name.mjs n8n-nodes-fishaudio
+          npm run lint
+          npm run build
+
   release:
     needs: build
     if: github.event_name == 'workflow_dispatch' && inputs.release-type != 'build-only'
@@ -65,9 +72,35 @@ jobs:
           git config user.email "${{ vars.BOT_EMAIL }}"
 
       - name: Release
+        id: release
         run: npx release-it --ci ${{ inputs.release-type }}
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
 
-      - name: Publish to npm
-        run: npm publish --ignore-scripts
+      # The same source is published under two names (see RELEASING.md).
+      # Keep this file name and `environment: release`: the npm trusted publishers match them.
+
+      # 1. The previous name, n8n-nodes-fishaudio. Existing workflows use this node type.
+      #    Set the repository variable PUBLISH_PREVIOUS_PACKAGE to 'false' to stop publishing it.
+      - name: Publish n8n-nodes-fishaudio
+        id: publish-previous
+        if: vars.PUBLISH_PREVIOUS_PACKAGE != 'false'
+        run: |
+          node scripts/set-package-name.mjs n8n-nodes-fishaudio
+          npm run build
+          npm publish --ignore-scripts --provenance
+
+      # 2. The current name, @fishaudio/n8n-nodes-fishaudio. Runs only when the repository
+      #    variable PUBLISH_SCOPED_PACKAGE is 'true', which needs the package's trusted publisher
+      #    to exist. It also runs if the previous-name publish failed, and its own failure does
+      #    not fail the release.
+      - name: Publish @fishaudio/n8n-nodes-fishaudio
+        if: ${{ !cancelled() && steps.release.outcome == 'success' && vars.PUBLISH_SCOPED_PACKAGE == 'true' }}
+        continue-on-error: true
+        run: |
+          node scripts/set-package-name.mjs @fishaudio/n8n-nodes-fishaudio
+          npm run build
+          if ! npm publish --ignore-scripts --provenance --access public; then
+            echo "::warning title=Scoped package not published::@fishaudio/n8n-nodes-fishaudio was not published. Check its npm trusted publisher, then publish this version from this commit."
+            exit 1
+          fi

@@ -13,6 +13,7 @@ import { speechDescription } from './resources/speech';
 import { accountDescription } from './resources/account';
 import { voiceModelDescription } from './resources/voiceModel';
 import { listSearch } from './methods';
+import { packageMovedNotice } from './packageInfo';
 import { API_BASE_URL, MIME_TYPES, fishAudioApiRequest } from './GenericFunctions';
 
 export class Fishaudio implements INodeType {
@@ -33,6 +34,7 @@ export class Fishaudio implements INodeType {
 		outputs: [NodeConnectionTypes.Main],
 		credentials: [{ name: 'fishaudioApi', required: true }],
 		properties: [
+			...packageMovedNotice,
 			{
 				displayName: 'Resource',
 				name: 'resource',

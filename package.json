@@ -1,5 +1,5 @@
 {
-  "name": "n8n-nodes-fishaudio",
+  "name": "@fishaudio/n8n-nodes-fishaudio",
   "version": "0.4.0",
   "description": "The official n8n node for the Fish Audio API.",
   "license": "MIT",
@@ -24,6 +24,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/fishaudio/fish-audio-n8n.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fishaudio/fish-audio-n8n/issues"
   },
   "scripts": {
     "build": "n8n-node build",
