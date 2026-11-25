@@ -14,9 +14,26 @@ const modelProperty: INodeProperties = {
 	displayName: 'Model',
 	name: 'model',
 	type: 'options',
-	// Ordered newest to oldest rather than alphabetically, so the recommended model comes first
-	// eslint-disable-next-line n8n-nodes-base/node-param-options-type-unsorted-items
+	// n8n's verification scanner requires alphabetical order and ignores eslint-disable comments.
+	// The default (S2.1 Pro) is preselected, so its position in the list doesn't matter.
 	options: [
+		{
+			name: 'Drama 3',
+			value: 'drama-3',
+			description:
+				'Model for voice direction and content creation. Billed at a higher rate than S2.1 Pro.',
+		},
+		{
+			name: 'S1 (Retiring December 31, 2026)',
+			value: 's1',
+			description:
+				'Deprecated. After December 31, 2026, requests are served by S2.1 Pro. Uses (parenthesis) emotion tags.',
+		},
+		{
+			name: 'S2 Pro',
+			value: 's2-pro',
+			description: 'Previous-generation S2 model',
+		},
 		{
 			name: 'S2.1 Pro (Recommended)',
 			value: 's2.1-pro',
@@ -29,30 +46,13 @@ const modelProperty: INodeProperties = {
 				'Same model as S2.1 Pro at no cost under fair-use limits, without latency guarantees. For testing and development.',
 		},
 		{
-			name: 'Drama 3',
-			value: 'drama-3',
-			description:
-				'Model for voice direction and content creation. Billed at a higher rate than S2.1 Pro.',
-		},
-		{
-			name: 'S2 Pro',
-			value: 's2-pro',
-			description: 'Previous-generation S2 model',
-		},
-		{
-			name: 'S1 (Retiring December 31, 2026)',
-			value: 's1',
-			description:
-				'Deprecated. After December 31, 2026, requests are served by S2.1 Pro. Uses (parenthesis) emotion tags.',
+			name: 'Speech 1.5 (Legacy)',
+			value: 'speech-1.5',
+			description: 'Deprecated since February 28, 2026. Kept so that saved workflows stay valid.',
 		},
 		{
 			name: 'Speech 1.6 (Legacy)',
 			value: 'speech-1.6',
-			description: 'Deprecated since February 28, 2026. Kept so that saved workflows stay valid.',
-		},
-		{
-			name: 'Speech 1.5 (Legacy)',
-			value: 'speech-1.5',
 			description: 'Deprecated since February 28, 2026. Kept so that saved workflows stay valid.',
 		},
 	],
