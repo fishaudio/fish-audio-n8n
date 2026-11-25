@@ -37,12 +37,18 @@ jobs:
       - name: Run build
         run: npm run build
 
+      # The check n8n runs before verifying a community node. A local scan skips the
+      # provenance checks, which need a published version.
+      - name: Run n8n community package scanner
+        run: npx --yes @n8n/scan-community-package@0.45.0 .
+
       # The previous package name gets a "this package has moved" notice. Lint and build it too.
       - name: Lint and build under the previous package name
         run: |
           node scripts/set-package-name.mjs n8n-nodes-fishaudio
           npm run lint
           npm run build
+          npx --yes @n8n/scan-community-package@0.45.0 .
 
   release:
     needs: build
