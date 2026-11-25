@@ -20,7 +20,8 @@ export class Fishaudio implements INodeType {
 		name: 'fishaudio',
 		icon: { light: 'file:fishaudio.svg', dark: 'file:fishaudio.dark.svg' },
 		group: ['transform'],
-		version: 1,
+		version: [1, 1.1],
+		defaultVersion: 1.1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description: 'Use Fish Audio for text-to-speech and voice generation',
 		defaults: {
@@ -146,7 +147,8 @@ async function executeSpeechGenerate(
 		value: '',
 	}) as string | { value: string };
 	const voiceId = typeof voiceIdParam === 'string' ? voiceIdParam : voiceIdParam.value;
-	const model = this.getNodeParameter('model', itemIndex, 's1') as string;
+	const defaultModel = this.getNode().typeVersion >= 1.1 ? 's2.1-pro' : 's2-pro';
+	const model = this.getNodeParameter('model', itemIndex, defaultModel) as string;
 	const format = this.getNodeParameter('format', itemIndex, 'mp3') as string;
 	const binaryPropertyName = this.getNodeParameter(
 		'binaryPropertyName',
