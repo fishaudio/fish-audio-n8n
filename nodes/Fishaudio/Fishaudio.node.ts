@@ -247,9 +247,8 @@ async function executeSpeechTranscribe(
 	if (options.language) {
 		formData.append('language', options.language);
 	}
-	if (options.includeTimestamps === false) {
-		formData.append('ignore_timestamps', 'true');
-	}
+	// The API leaves timestamps out unless asked, so send the option either way.
+	formData.append('ignore_timestamps', String(options.includeTimestamps === false));
 
 	const response = await this.helpers.httpRequestWithAuthentication.call(this, 'fishaudioApi', {
 		method: 'POST',
@@ -371,6 +370,8 @@ async function executeVoiceModelCreate(
 
 	const formData = new FormData();
 	formData.append('title', title);
+	formData.append('type', 'tts');
+	formData.append('train_mode', 'fast');
 
 	// Add voice audio file(s)
 	const binaryData = this.helpers.assertBinaryData(itemIndex, voiceAudioField);
@@ -385,7 +386,11 @@ async function executeVoiceModelCreate(
 		formData.append('description', options.description);
 	}
 	if (options.visibility) {
-		formData.append('visibility', options.visibility);
+		// Earlier versions offered 'unlisted', which the API rejects; it expects 'unlist'.
+		formData.append(
+			'visibility',
+			options.visibility === 'unlisted' ? 'unlist' : options.visibility,
+		);
 	}
 	if (options.tags) {
 		const tags = options.tags.split(',').map((t) => t.trim());

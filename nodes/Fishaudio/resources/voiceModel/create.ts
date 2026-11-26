@@ -51,10 +51,11 @@ export const createDescription: INodeProperties[] = [
 				options: [
 					{ name: 'Private', value: 'private' },
 					{ name: 'Public', value: 'public' },
-					{ name: 'Unlisted', value: 'unlisted' },
+					{ name: 'Unlisted', value: 'unlist' },
 				],
 				default: 'private',
-				description: 'Who can see and use this voice model',
+				description:
+					'Who can see and use this voice model. Public requests are created as private; publish a voice from the Fish Audio website.',
 			},
 			{
 				displayName: 'Tags',
