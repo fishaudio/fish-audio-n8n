@@ -35,6 +35,13 @@ export const createDescription: INodeProperties[] = [
 		displayOptions,
 		options: [
 			{
+				displayName: 'Cover Image Field',
+				name: 'coverImageField',
+				type: 'string',
+				default: '',
+				description: 'The name of the binary field containing a cover image (optional)',
+			},
+			{
 				displayName: 'Description',
 				name: 'description',
 				type: 'string',
@@ -43,6 +50,20 @@ export const createDescription: INodeProperties[] = [
 				},
 				default: '',
 				description: 'Description of the voice model',
+			},
+			{
+				displayName: 'Enhance Audio Quality',
+				name: 'enhanceAudioQuality',
+				type: 'boolean',
+				default: true,
+				description: 'Whether to clean up the voice samples before creating the voice model',
+			},
+			{
+				displayName: 'Tags',
+				name: 'tags',
+				type: 'string',
+				default: '',
+				description: 'Tags for categorization (comma-separated)',
 			},
 			{
 				displayName: 'Visibility',
@@ -56,20 +77,6 @@ export const createDescription: INodeProperties[] = [
 				default: 'private',
 				description:
 					'Who can see and use this voice model. Public requests are created as private; publish a voice from the Fish Audio website.',
-			},
-			{
-				displayName: 'Tags',
-				name: 'tags',
-				type: 'string',
-				default: '',
-				description: 'Tags for categorization (comma-separated)',
-			},
-			{
-				displayName: 'Cover Image Field',
-				name: 'coverImageField',
-				type: 'string',
-				default: '',
-				description: 'The name of the binary field containing a cover image (optional)',
 			},
 		],
 	},

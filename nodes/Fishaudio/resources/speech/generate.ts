@@ -149,6 +149,18 @@ export const generateDescription: INodeProperties[] = [
 		displayOptions,
 		options: [
 			{
+				displayName: 'Chunk Length',
+				name: 'chunkLength',
+				type: 'number',
+				typeOptions: {
+					minValue: 100,
+					maxValue: 300,
+				},
+				default: 300,
+				description:
+					'Characters per generation chunk (100 to 300). Lower values start faster, higher values sound more consistent.',
+			},
+			{
 				displayName: 'Latency Mode',
 				name: 'latency',
 				type: 'options',
@@ -160,11 +172,37 @@ export const generateDescription: INodeProperties[] = [
 				description: 'Trade-off between speed and quality',
 			},
 			{
+				displayName: 'MP3 Bitrate',
+				name: 'mp3Bitrate',
+				type: 'options',
+				options: [
+					{ name: '64 Kbps', value: 64 },
+					{ name: '128 Kbps', value: 128 },
+					{ name: '192 Kbps', value: 192 },
+				],
+				default: 128,
+				description: 'Bitrate of MP3 output. Used only when the output format is MP3.',
+			},
+			{
 				displayName: 'Normalize Text',
 				name: 'normalize',
 				type: 'boolean',
 				default: true,
 				description: 'Whether to normalize and clean the input text',
+			},
+			{
+				displayName: 'Opus Bitrate',
+				name: 'opusBitrate',
+				type: 'options',
+				options: [
+					{ name: '24 Kbps', value: 24 },
+					{ name: '32 Kbps', value: 32 },
+					{ name: '48 Kbps', value: 48 },
+					{ name: '64 Kbps', value: 64 },
+					{ name: 'Automatic', value: -1000 },
+				],
+				default: -1000,
+				description: 'Bitrate of Opus output. Used only when the output format is Opus.',
 			},
 			{
 				displayName: 'Sample Rate',
@@ -215,6 +253,18 @@ export const generateDescription: INodeProperties[] = [
 				},
 				default: 0.7,
 				description: 'Nucleus sampling parameter for token selection',
+			},
+			{
+				displayName: 'Volume',
+				name: 'volume',
+				type: 'number',
+				typeOptions: {
+					minValue: -20,
+					maxValue: 20,
+					numberPrecision: 1,
+				},
+				default: 0,
+				description: 'Volume change in decibels (-20 to 20). 0 leaves the volume unchanged.',
 			},
 		],
 	},

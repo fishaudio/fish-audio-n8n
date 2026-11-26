@@ -21,8 +21,8 @@ export class Fishaudio implements INodeType {
 		name: 'fishaudio',
 		icon: { light: 'file:fishaudio.svg', dark: 'file:fishaudio.dark.svg' },
 		group: ['transform'],
-		version: [1, 1.1],
-		defaultVersion: 1.1,
+		version: [1, 1.1, 1.2],
+		defaultVersion: 1.2,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description: 'Use Fish Audio for text-to-speech and voice generation',
 		defaults: {
@@ -168,6 +168,10 @@ async function executeSpeechGenerate(
 		normalize?: boolean;
 		temperature?: number;
 		topP?: number;
+		volume?: number;
+		mp3Bitrate?: number;
+		opusBitrate?: number;
+		chunkLength?: number;
 	};
 
 	const body: IDataObject = {
@@ -182,8 +186,28 @@ async function executeSpeechGenerate(
 	if (additionalOptions.latency) {
 		body.latency = additionalOptions.latency;
 	}
-	if (additionalOptions.speed !== undefined) {
-		body.prosody = { speed: additionalOptions.speed };
+	if (additionalOptions.speed !== undefined || additionalOptions.volume !== undefined) {
+		const prosody: IDataObject = {};
+		if (additionalOptions.speed !== undefined) {
+			prosody.speed = additionalOptions.speed;
+		}
+		if (additionalOptions.volume !== undefined) {
+			prosody.volume = additionalOptions.volume;
+		}
+		body.prosody = prosody;
+	}
+	if (additionalOptions.mp3Bitrate !== undefined) {
+		body.mp3_bitrate = additionalOptions.mp3Bitrate;
+	}
+	if (additionalOptions.opusBitrate !== undefined) {
+		// The API takes the Opus bitrate in bits per second; -1000 means automatic.
+		body.opus_bitrate =
+			additionalOptions.opusBitrate > 0
+				? additionalOptions.opusBitrate * 1000
+				: additionalOptions.opusBitrate;
+	}
+	if (additionalOptions.chunkLength !== undefined) {
+		body.chunk_length = additionalOptions.chunkLength;
 	}
 	if (additionalOptions.sampleRate !== undefined) {
 		body.sample_rate = additionalOptions.sampleRate;
@@ -232,6 +256,9 @@ async function executeSpeechTranscribe(
 		language?: string;
 		includeTimestamps?: boolean;
 	};
+	// Nodes saved before version 1.2 had no Model field and ran on the API default, transcribe-1.
+	const defaultSttModel = this.getNode().typeVersion >= 1.2 ? 'transcribe-1-pro' : 'transcribe-1';
+	const sttModel = this.getNodeParameter('sttModel', itemIndex, defaultSttModel) as string;
 
 	const binaryData = this.helpers.assertBinaryData(itemIndex, binaryPropertyName);
 	const audioBuffer = await this.helpers.getBinaryDataBuffer(itemIndex, binaryPropertyName);
@@ -255,6 +282,7 @@ async function executeSpeechTranscribe(
 		baseURL: API_BASE_URL,
 		url: '/v1/asr',
 		body: formData,
+		headers: { model: sttModel },
 	});
 
 	return [
@@ -366,6 +394,7 @@ async function executeVoiceModelCreate(
 		visibility?: string;
 		tags?: string;
 		coverImageField?: string;
+		enhanceAudioQuality?: boolean;
 	};
 
 	const formData = new FormData();
@@ -391,6 +420,9 @@ async function executeVoiceModelCreate(
 			'visibility',
 			options.visibility === 'unlisted' ? 'unlist' : options.visibility,
 		);
+	}
+	if (options.enhanceAudioQuality !== undefined) {
+		formData.append('enhance_audio_quality', String(options.enhanceAudioQuality));
 	}
 	if (options.tags) {
 		const tags = options.tags.split(',').map((t) => t.trim());
