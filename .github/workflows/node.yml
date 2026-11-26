@@ -34,6 +34,10 @@ jobs:
       - name: Run lint
         run: npm run lint
 
+      # Builds, then runs test/*.test.cjs against the build.
+      - name: Run tests
+        run: npm test
+
       - name: Run build
         run: npm run build
 
