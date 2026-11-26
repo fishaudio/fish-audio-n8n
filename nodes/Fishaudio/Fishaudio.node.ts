@@ -33,14 +33,6 @@ export class Fishaudio implements INodeType {
 		outputs: [NodeConnectionTypes.Main],
 		credentials: [{ name: 'fishaudioApi', required: true }],
 		properties: [
-			// A notice, not `deprecated`: n8n blocks editing deprecated nodes by default.
-			{
-				displayName:
-					'This package has moved to <b>@fishaudio/n8n-nodes-fishaudio</b>. This node keeps working. Self-hosted n8n can switch now; n8n Cloud can switch once the new package is in the verified list. See the <a href="https://github.com/fishaudio/fish-audio-n8n#move-from-n8n-nodes-fishaudio" target="_blank">migration guide</a>.',
-				name: 'packageMovedNotice',
-				type: 'notice',
-				default: '',
-			},
 			{
 				displayName: 'Resource',
 				name: 'resource',
