@@ -1,0 +1,97 @@
+{
+	"name": "Fish Audio: re-voice a recording",
+	"nodes": [
+		{
+			"parameters": {
+				"content": "## Re-voice a recording\nUpload a recording and get the same words back, spoken by another voice. Useful for replacing a draft voice-over, or for making narration consistent across videos.\n\n1. **Transcribe** turns the recording into text.\n2. **Generate speech** reads the text with the voice you choose.\n3. The form returns the new MP3.\n\n**Setup**\n1. Select your Fish Audio credential (API key from https://fish.audio/app/api-keys) in **Transcribe** and **Generate speech**.\n2. Publish (activate) the workflow and open the form's production URL.\n\nFind voice IDs on https://fish.audio: it is the 32-character ID in a voice's URL. Leave the field empty for the default voice.",
+				"height": 440,
+				"width": 460
+			},
+			"id": "9e4f5a6b-7c8d-4e9f-a0b1-c2d3e4f5a601",
+			"name": "Sticky Note",
+			"type": "n8n-nodes-base.stickyNote",
+			"typeVersion": 1,
+			"position": [-260, -360]
+		},
+		{
+			"parameters": {
+				"formTitle": "Re-voice a recording",
+				"formDescription": "Upload a recording. You get the same words back, spoken by the voice you choose.",
+				"formFields": {
+					"values": [
+						{
+							"fieldLabel": "Recording",
+							"fieldType": "file",
+							"multipleFiles": false,
+							"acceptFileTypes": ".mp3,.wav,.m4a,.ogg,.opus,.flac,.webm,.aac",
+							"requiredField": true
+						},
+						{
+							"fieldLabel": "Voice ID",
+							"placeholder": "e.g. 802e3bc2b27e49c2995d23ef70e6ac89 (leave empty for the default voice)"
+						}
+					]
+				},
+				"options": {}
+			},
+			"id": "9e4f5a6b-7c8d-4e9f-a0b1-c2d3e4f5a602",
+			"name": "Upload recording",
+			"type": "n8n-nodes-base.formTrigger",
+			"typeVersion": 2.2,
+			"position": [0, 160],
+			"webhookId": "4d9e5f6a-7b82-4c93-8da4-c5d6e7f8091a"
+		},
+		{
+			"parameters": {
+				"operation": "transcribe",
+				"binaryPropertyName": "Recording",
+				"options": {
+					"includeTimestamps": false
+				}
+			},
+			"id": "9e4f5a6b-7c8d-4e9f-a0b1-c2d3e4f5a603",
+			"name": "Transcribe",
+			"type": "@fishaudio/n8n-nodes-fishaudio.fishaudio",
+			"typeVersion": 1.2,
+			"position": [240, 160]
+		},
+		{
+			"parameters": {
+				"text": "={{ $json.text.replace(/<\\|speaker:[^|]*\\|>\\s*/g, '') }}",
+				"voiceId": {
+					"__rl": true,
+					"mode": "id",
+					"value": "={{ ($('Upload recording').item.json['Voice ID'] || '').trim() }}"
+				},
+				"additionalOptions": {}
+			},
+			"id": "9e4f5a6b-7c8d-4e9f-a0b1-c2d3e4f5a604",
+			"name": "Generate speech",
+			"type": "@fishaudio/n8n-nodes-fishaudio.fishaudio",
+			"typeVersion": 1.2,
+			"position": [480, 160]
+		},
+		{
+			"parameters": {
+				"operation": "completion",
+				"respondWith": "returnBinary",
+				"completionTitle": "Your new recording",
+				"inputDataFieldName": "data",
+				"options": {}
+			},
+			"id": "9e4f5a6b-7c8d-4e9f-a0b1-c2d3e4f5a605",
+			"name": "Return audio",
+			"type": "n8n-nodes-base.form",
+			"typeVersion": 1,
+			"position": [720, 160],
+			"webhookId": "5eaf6071-8c93-4da4-9eb5-d6e7f8091a2b"
+		}
+	],
+	"connections": {
+		"Upload recording": { "main": [[{ "node": "Transcribe", "type": "main", "index": 0 }]] },
+		"Transcribe": { "main": [[{ "node": "Generate speech", "type": "main", "index": 0 }]] },
+		"Generate speech": { "main": [[{ "node": "Return audio", "type": "main", "index": 0 }]] }
+	},
+	"settings": { "executionOrder": "v1" },
+	"pinData": {}
+}
