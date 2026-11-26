@@ -79,5 +79,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
 
+      # release-it has just changed the version. Build again so the published files carry
+      # it: the build copies package.json, and the User-Agent reads its version from there.
+      - name: Build the released version
+        run: npm run build
+
       - name: Publish to npm
         run: npm publish --ignore-scripts
