@@ -80,13 +80,13 @@ n8n stores the package name in each workflow, so a workflow uses the new package
 
 This works on any n8n, including n8n Cloud.
 
-1. Install `@fishaudio/n8n-nodes-fishaudio`. Keep `n8n-nodes-fishaudio` installed: both can be installed at the same time.
-2. Open a workflow that uses Fish Audio. For each Fish Audio node:
+1. If your n8n offers it, update `n8n-nodes-fishaudio` to 0.5.0 or later first: its node then shows the notice, which tells the two Fish Audio nodes apart. Then install `@fishaudio/n8n-nodes-fishaudio`, and keep both installed until you finish.
+2. Open a workflow that uses Fish Audio. If it is published and the editor shows unpublished changes, decide about those first: step 3 publishes everything in the draft. For each Fish Audio node:
    1. Add a Fish Audio node from the nodes panel and choose the same operation. While both packages are installed, the panel shows two Fish Audio nodes; the one from the previous package shows the notice when you open it.
    2. Select your Fish Audio credential and enter the same parameters as in the old node. Copy the old node's **Settings** tab too (for example Always Output Data, Execute Once, Retry On Fail and On Error), and its notes. If the old node is deactivated, deactivate the new one.
    3. Connect the new node in place of the old one, and delete the old node.
    4. Give the new node the old node's name. Expressions such as `$('Fish Audio')` refer to a node by name.
-3. **Publish** the workflow (in n8n 1.x, save it while it is active). Saving alone changes only the draft: the published workflow keeps using the old node until you publish.
+3. If the workflow is published, **publish** it again (in n8n 1.x, save it while it is active). Saving alone changes only the draft: the published workflow keeps using the old node until you publish. If the workflow is not published, just save it; publishing would turn it on.
 4. Run the workflow once to check it.
 5. Uninstall `n8n-nodes-fishaudio` only when no workflow uses it **and** no execution that started before your change is still running or waiting (for example at a Wait node or a form). Such an execution continues with the old node when it resumes. Retrying an old execution, or restoring an older workflow version, also needs the old package.
 
@@ -102,7 +102,7 @@ What to expect:
 
 Run the commands where the `n8n` command works (for Docker, through `docker exec`). Node.js is part of every n8n install.
 
-1. Install `@fishaudio/n8n-nodes-fishaudio`, and keep `n8n-nodes-fishaudio` installed.
+1. Update `n8n-nodes-fishaudio` to 0.5.0 or later, install `@fishaudio/n8n-nodes-fishaudio`, and keep both installed.
 2. Export all workflows, both drafts and published versions. `workflows-backup.json` is your backup; keep it. If no workflow is published, the second command says so, and you can go on.
 
    ```bash

@@ -3,8 +3,8 @@
 	"nodes": [
 		{
 			"parameters": {
-				"content": "## Re-voice a recording\nUpload a recording and get the same words back, spoken by another voice. Useful for replacing a draft voice-over, or for making narration consistent across videos.\n\n1. **Transcribe** turns the recording into text.\n2. **Generate speech** reads the text with the voice you choose.\n3. The form returns the new MP3.\n\n**Setup**\n1. Select your Fish Audio credential (API key from https://fish.audio/app/api-keys) in **Transcribe** and **Generate speech**.\n2. Publish (activate) the workflow and open the form's production URL.\n\nFind voice IDs on https://fish.audio: it is the 32-character ID in a voice's URL. Leave the field empty for the default voice.",
-				"height": 440,
+				"content": "## Re-voice a recording\nUpload a recording and get the same words back, spoken by another voice. Useful for replacing a draft voice-over, or for making narration consistent across videos.\n\n1. **Transcribe** turns the recording into text.\n2. **Generate speech** reads the text with the voice you choose.\n3. The form returns the new MP3.\n\n**Setup**\n1. Open **Upload recording** and create a **Basic Auth** credential (a user name and a password). Share them only with the people who may use the form: each use spends your Fish Audio credits.\n2. Select your Fish Audio credential (API key from https://fish.audio/app/api-keys) in **Transcribe** and **Generate speech**.\n3. Publish (activate) the workflow and open the form's production URL.\n\nFind voice IDs on https://fish.audio: it is the 32-character ID in a voice's URL. Leave the field empty for the default voice.",
+				"height": 500,
 				"width": 460
 			},
 			"id": "9e4f5a6b-7c8d-4e9f-a0b1-c2d3e4f5a601",
@@ -15,6 +15,7 @@
 		},
 		{
 			"parameters": {
+				"authentication": "basicAuth",
 				"formTitle": "Re-voice a recording",
 				"formDescription": "Upload a recording. You get the same words back, spoken by the voice you choose.",
 				"formFields": {

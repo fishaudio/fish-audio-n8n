@@ -3,8 +3,8 @@
 	"nodes": [
 		{
 			"parameters": {
-				"content": "## Transcribe an uploaded audio file\nA form where anyone with the link uploads a recording and gets the transcript back. The transcript drops the speaker labels (`<|speaker:0|>`) that the Transcribe 1 Pro model adds. The full result, with timestamps and speaker turns, is in the execution data for further steps (for example, save it to a sheet or send it by email).\n\n**Setup**\n1. Open **Transcribe** and select your Fish Audio credential (API key from https://fish.audio/app/api-keys).\n2. Publish (activate) the workflow and open the form's production URL.",
-				"height": 300,
+				"content": "## Transcribe an uploaded audio file\nA form where anyone with the link uploads a recording and gets the transcript back. The transcript drops the speaker labels (`<|speaker:0|>`) that the Transcribe 1 Pro model adds. The full result, with timestamps and speaker turns, is in the execution data for further steps (for example, save it to a sheet or send it by email).\n\n**Setup**\n1. Open **Upload form** and create a **Basic Auth** credential (a user name and a password). Share them only with the people who may use the form: each use spends your Fish Audio credits.\n2. Open **Transcribe** and select your Fish Audio credential (API key from https://fish.audio/app/api-keys).\n3. Publish (activate) the workflow and open the form's production URL.",
+				"height": 360,
 				"width": 420
 			},
 			"id": "6c2d1a8e-3f4b-4e9a-9b1c-2d3e4f5a6b01",
@@ -15,6 +15,7 @@
 		},
 		{
 			"parameters": {
+				"authentication": "basicAuth",
 				"formTitle": "Transcribe audio",
 				"formDescription": "Upload a recording (MP3, WAV, M4A, OGG or similar) to get its transcript.",
 				"formFields": {

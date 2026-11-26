@@ -3,8 +3,8 @@
 	"nodes": [
 		{
 			"parameters": {
-				"content": "## Text to speech API\nTurns a POST request into an MP3 file with Fish Audio.\n\n**Setup**\n1. Open **Generate speech** and select your Fish Audio credential (API key from https://fish.audio/app/api-keys).\n2. Publish (activate) the workflow.\n\n**Call it**\n```\ncurl -X POST <production webhook URL> \\\n  -H 'Content-Type: application/json' \\\n  -d '{\"text\": \"Hello from Fish Audio\"}' \\\n  -o speech.mp3\n```\nAdd `\"voice_id\"` to use a voice from https://fish.audio (the 32-character ID in the voice's URL). Without it, the default voice is used.",
-				"height": 420,
+				"content": "## Text to speech API\nTurns a POST request into an MP3 file with Fish Audio.\n\n**Setup**\n1. Open **Receive text** and create a **Header Auth** credential: name `X-API-Key`, value a long random secret. Only callers who send that header can use the webhook, and with it your Fish Audio credits.\n2. Open **Generate speech** and select your Fish Audio credential (API key from https://fish.audio/app/api-keys).\n3. Publish (activate) the workflow.\n\n**Call it**\n```\ncurl -X POST <production webhook URL> \\\n  -H 'X-API-Key: <your secret>' \\\n  -H 'Content-Type: application/json' \\\n  -d '{\"text\": \"Hello from Fish Audio\"}' \\\n  -o speech.mp3\n```\nAdd `\"voice_id\"` to use a voice from https://fish.audio (the 32-character ID in the voice's URL). Without it, the default voice is used.",
+				"height": 520,
 				"width": 420
 			},
 			"id": "4a1b0b3e-1d7e-4c55-8d3c-0c6a8c1b2a01",
@@ -17,6 +17,7 @@
 			"parameters": {
 				"httpMethod": "POST",
 				"path": "fish-audio-tts",
+				"authentication": "headerAuth",
 				"responseMode": "responseNode",
 				"options": {}
 			},
