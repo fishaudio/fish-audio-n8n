@@ -35,6 +35,11 @@ const modelProperty: INodeProperties = {
 				'Model for voice direction and content creation. Billed at a higher rate than S2.1 Pro.',
 		},
 		{
+			name: 'S3 Pro',
+			value: 's3-pro',
+			description: 'S3 Pro model',
+		},
+		{
 			name: 'S2 Pro',
 			value: 's2-pro',
 			description: 'Previous-generation S2 model',
