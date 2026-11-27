@@ -55,7 +55,7 @@ The node can also be used as a tool by n8n's AI Agent.
 
 ## Workflow templates
 
-The [`templates`](templates) folder has workflows you can import. In n8n, open a new workflow, select **⋯ → Import → From URL** (**Import from URL** in n8n 1.x) and paste the URL, or download the file and import it from a file. Then select your Fish Audio credential in each Fish Audio node, and publish the workflow (**Active** toggle in n8n 1.x).
+The [`templates`](templates) folder has workflows you can import. In n8n, open a new workflow, select **⋯ → Import → From URL** (**Import from URL** in n8n 1.x) and paste the URL, or download the file and import it from a file. Then follow the setup note in the template: create the credential that protects its webhook or form (Header Auth or Basic Auth), select your Fish Audio credential in each Fish Audio node, and publish the workflow (**Active** toggle in n8n 1.x).
 
 | Template                          | What it does                                                                       | Import URL                                                                                              |
 | --------------------------------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
@@ -88,9 +88,9 @@ This works on any n8n, including n8n Cloud.
    4. Give the new node the old node's name. Expressions such as `$('Fish Audio')` refer to a node by name.
 3. If the workflow is published, **publish** it again (in n8n 1.x, save it while it is active). Saving alone changes only the draft: the published workflow keeps using the old node until you publish. If the workflow is not published, just save it; publishing would turn it on.
 4. Run the workflow once to check it.
-5. Uninstall `n8n-nodes-fishaudio` only when no workflow uses it **and** no execution that started before your change is still running or waiting (for example at a Wait node or a form). Such an execution continues with the old node when it resumes. Retrying an old execution, or restoring an older workflow version, also needs the old package.
+5. Uninstall `n8n-nodes-fishaudio` only when no workflow uses it **and** no execution that started before your change is still running or waiting (for example at a Wait node or a form). Such an execution continues with the old node when it resumes. Retrying an old execution with its original workflow, or restoring an older workflow version, also needs the old package.
 
-There is no bulk path: n8n's workflow import unpublishes the workflows it imports and overwrites their saved state, such as a polling trigger's position. So move many workflows one by one in the editor.
+This guide covers only the editor. Don't use n8n's workflow export and import to move workflows: import unpublishes the workflows it imports and overwrites their saved state, such as a polling trigger's position.
 
 ## Resources
 
