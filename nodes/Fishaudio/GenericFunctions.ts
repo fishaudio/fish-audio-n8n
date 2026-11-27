@@ -51,3 +51,31 @@ export async function fishAudioApiRequest(
 		throw new NodeApiError(this.getNode(), error as JsonObject);
 	}
 }
+
+/**
+ * Adds the Fish Audio trace ID and error code to an API error's description, when the
+ * response carries them, so users can quote them to support. n8n keeps the HTTP error
+ * as the error's cause. Responses without these headers leave the error unchanged.
+ */
+export function addTraceDetails(error: unknown): void {
+	if (!(error instanceof NodeApiError)) {
+		return;
+	}
+	const headers = (error.cause as { response?: { headers?: Record<string, unknown> } } | undefined)
+		?.response?.headers;
+	const header = (name: string) => {
+		const value = headers?.[name];
+		return typeof value === 'string' && value !== '' ? value : undefined;
+	};
+	const details = [
+		['Trace ID', header('x-fish-trace-id')],
+		['Error code', header('x-fish-error-code')],
+	]
+		.filter(([, value]) => value !== undefined)
+		.map(([label, value]) => `${label}: ${value}`)
+		.join(' · ');
+	if (details === '' || error.description?.includes(details)) {
+		return;
+	}
+	error.description = error.description ? `${error.description} (${details})` : details;
+}
