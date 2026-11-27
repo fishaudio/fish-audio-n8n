@@ -13,7 +13,7 @@ import { speechDescription } from './resources/speech';
 import { accountDescription } from './resources/account';
 import { voiceModelDescription } from './resources/voiceModel';
 import { listSearch } from './methods';
-import { API_BASE_URL, MIME_TYPES, fishAudioApiRequest } from './GenericFunctions';
+import { API_BASE_URL, MIME_TYPES, addTraceDetails, fishAudioApiRequest } from './GenericFunctions';
 
 export class Fishaudio implements INodeType {
 	description: INodeTypeDescription = {
@@ -124,6 +124,7 @@ export class Fishaudio implements INodeType {
 
 				returnData.push(...results);
 			} catch (error) {
+				addTraceDetails(error);
 				if (this.continueOnFail()) {
 					returnData.push({
 						json: { error: (error as Error).message },
@@ -172,6 +173,7 @@ async function executeSpeechGenerate(
 		mp3Bitrate?: number;
 		opusBitrate?: number;
 		chunkLength?: number;
+		language?: string;
 	};
 
 	const body: IDataObject = {
@@ -183,6 +185,10 @@ async function executeSpeechGenerate(
 		body.reference_id = voiceId;
 	}
 
+	// Sent as given; the API checks the tag. Empty means not set, so nothing is sent.
+	if (additionalOptions.language) {
+		body.language = additionalOptions.language;
+	}
 	if (additionalOptions.latency) {
 		body.latency = additionalOptions.latency;
 	}

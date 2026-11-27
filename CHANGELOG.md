@@ -1,5 +1,16 @@
 # Changelog
 
+# [0.5.0](https://github.com/fishaudio/fish-audio-n8n/compare/v0.4.0...v0.5.0) (2026-11-27)
+
+
+### Features
+
+* add Language to Speech > Generate ([#40](https://github.com/fishaudio/fish-audio-n8n/issues/40)) ([94ddd93](https://github.com/fishaudio/fish-audio-n8n/commit/94ddd93281ec7129780b4c1b72027513bdfbbce8))
+* add s2.1-pro, s2.1-pro-free and drama-3; default new nodes to s2.1-pro ([#35](https://github.com/fishaudio/fish-audio-n8n/issues/35)) ([307ad2f](https://github.com/fishaudio/fish-audio-n8n/commit/307ad2fef163f69b4084c64e0be247f2d049cca7))
+* node 1.2, fixes, templates, and a notice that the package is moving to @fishaudio/n8n-nodes-fishaudio ([#39](https://github.com/fishaudio/fish-audio-n8n/issues/39)) ([737b7fe](https://github.com/fishaudio/fish-audio-n8n/commit/737b7fe4e36853b0b3f567cef5ac47f67c3523c1)), closes [#35](https://github.com/fishaudio/fish-audio-n8n/issues/35)
+* send User-Agent fish-audio-n8n/<version> on every request ([#38](https://github.com/fishaudio/fish-audio-n8n/issues/38)) ([f5b98e3](https://github.com/fishaudio/fish-audio-n8n/commit/f5b98e315f77da082a274239d00e901257dec5c7))
+* show the Fish Audio trace ID and error code when a request fails ([#41](https://github.com/fishaudio/fish-audio-n8n/issues/41)) ([55b3165](https://github.com/fishaudio/fish-audio-n8n/commit/55b3165ba42e721772662de698af080c04152e72))
+
 # [0.4.0](https://github.com/fishaudio/fish-audio-n8n/compare/v0.3.1...v0.4.0) (2026-03-10)
 
 
