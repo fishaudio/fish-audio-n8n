@@ -5,18 +5,18 @@
 
 # Fish Audio for n8n
 
-[![npm version](https://img.shields.io/npm/v/n8n-nodes-fishaudio)](https://www.npmjs.com/package/n8n-nodes-fishaudio)
+[![npm version](https://img.shields.io/npm/v/@fishaudio/n8n-nodes-fishaudio)](https://www.npmjs.com/package/@fishaudio/n8n-nodes-fishaudio)
 [![License](https://img.shields.io/github/license/fishaudio/fish-audio-n8n)](https://github.com/fishaudio/fish-audio-n8n/blob/main/LICENSE)
 
 The official n8n community node for [Fish Audio](https://fish.audio): text to speech, speech to text and voice cloning in your n8n workflows.
 
 [n8n](https://n8n.io/) is a [fair-code licensed](https://docs.n8n.io/sustainable-use-license/) workflow automation platform.
 
-> **This node has moved to `@fishaudio/n8n-nodes-fishaudio`,** under the Fish Audio npm organization. `n8n-nodes-fishaudio` keeps working. See [Move from n8n-nodes-fishaudio](#move-from-n8n-nodes-fishaudio).
+> **The package is now `@fishaudio/n8n-nodes-fishaudio`.** It was previously published as `n8n-nodes-fishaudio`, which keeps working. See [Move from n8n-nodes-fishaudio](#move-from-n8n-nodes-fishaudio).
 
 ## Installation
 
-- **Self-hosted n8n:** open **Settings → Community nodes → Install**, enter the package name and confirm. For other ways to install, see n8n's [installation guide](https://docs.n8n.io/integrations/community-nodes/installation/).
+- **Self-hosted n8n:** open **Settings → Community nodes → Install**, enter `@fishaudio/n8n-nodes-fishaudio` and confirm. For other ways to install, see n8n's [installation guide](https://docs.n8n.io/integrations/community-nodes/installation/).
 - **n8n Cloud:** open the nodes panel, search for **Fish Audio** and install it from there. Cloud offers only community nodes that n8n has verified.
 
 ## Credentials
@@ -63,11 +63,11 @@ The [`templates`](templates) folder has workflows you can import. In n8n, open a
 | Transcribe an uploaded audio file | A form where people upload a recording and see its transcript.                     | `https://raw.githubusercontent.com/fishaudio/fish-audio-n8n/main/templates/transcribe-audio-form.json`  |
 | Re-voice a recording              | A form that transcribes a recording and returns the same words in another voice.   | `https://raw.githubusercontent.com/fishaudio/fish-audio-n8n/main/templates/revoice-recording-form.json` |
 
-The templates need `@fishaudio/n8n-nodes-fishaudio` 0.5.0 or later installed; they don't work with `n8n-nodes-fishaudio`.
+The templates need version 0.5.0 or later.
 
 ## Move from n8n-nodes-fishaudio
 
-`@fishaudio/n8n-nodes-fishaudio` is the same node as `n8n-nodes-fishaudio`, published by Fish Audio's npm organization from this repository.
+`@fishaudio/n8n-nodes-fishaudio` is the same node as `n8n-nodes-fishaudio`, published by Fish Audio's npm organization from this repository. New versions are published as `@fishaudio/n8n-nodes-fishaudio`.
 
 **Nothing breaks if you wait.** Workflows that use `n8n-nodes-fishaudio` keep working. From version 0.5.0, that node shows a notice at the top of its settings.
 
@@ -97,3 +97,4 @@ This guide covers only the editor. Don't use the `n8n export:workflow` and `n8n 
 - [Fish Audio](https://fish.audio)
 - [Fish Audio API documentation](https://docs.fish.audio)
 - [n8n community nodes documentation](https://docs.n8n.io/integrations/community-nodes/)
+- [Releasing this package](RELEASING.md)
