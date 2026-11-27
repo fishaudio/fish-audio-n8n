@@ -180,6 +180,7 @@ async function executeSpeechGenerate(
 		mp3Bitrate?: number;
 		opusBitrate?: number;
 		chunkLength?: number;
+		language?: string;
 	};
 
 	const body: IDataObject = {
@@ -191,6 +192,10 @@ async function executeSpeechGenerate(
 		body.reference_id = voiceId;
 	}
 
+	// Sent as given; the API checks the tag. Empty means not set, so nothing is sent.
+	if (additionalOptions.language) {
+		body.language = additionalOptions.language;
+	}
 	if (additionalOptions.latency) {
 		body.latency = additionalOptions.latency;
 	}
