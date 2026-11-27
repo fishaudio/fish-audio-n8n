@@ -55,6 +55,21 @@ test('only the trace ID when there is no error code', async () => {
 	assert.doesNotMatch(thrown.description, /Error code/);
 });
 
+test('on an n8n that drops the cause (n8n-workflow before 2.34), nothing is added', async () => {
+	// Build the error as such a version leaves it: without a cause.
+	const httpError = Object.assign(new Error('Request failed with status code 401'), {
+		name: 'AxiosError',
+		isAxiosError: true,
+		response: { status: 401, headers: { 'x-fish-trace-id': 'abc123' }, data: {} },
+	});
+	const error = new NodeApiError(node, httpError);
+	error.cause = undefined;
+	const before = error.description;
+	const thrown = await runFailing(error);
+	assert.equal(thrown, error);
+	assert.equal(thrown.description, before);
+});
+
 test('nothing is added when the response has neither header', async () => {
 	const error = apiError(401, { 'content-type': 'application/json' });
 	const before = error.description;
