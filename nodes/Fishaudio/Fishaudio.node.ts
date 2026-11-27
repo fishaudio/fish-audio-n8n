@@ -13,7 +13,7 @@ import { speechDescription } from './resources/speech';
 import { accountDescription } from './resources/account';
 import { voiceModelDescription } from './resources/voiceModel';
 import { listSearch } from './methods';
-import { API_BASE_URL, MIME_TYPES, fishAudioApiRequest } from './GenericFunctions';
+import { API_BASE_URL, MIME_TYPES, addTraceDetails, fishAudioApiRequest } from './GenericFunctions';
 
 export class Fishaudio implements INodeType {
 	description: INodeTypeDescription = {
@@ -132,6 +132,7 @@ export class Fishaudio implements INodeType {
 
 				returnData.push(...results);
 			} catch (error) {
+				addTraceDetails(error);
 				if (this.continueOnFail()) {
 					returnData.push({
 						json: { error: (error as Error).message },
