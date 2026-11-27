@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.1](https://github.com/fishaudio/fish-audio-n8n/compare/v0.5.0...v0.5.1) (2026-11-27)
+
+
+### Features
+
+* publish as @fishaudio/n8n-nodes-fishaudio ([#42](https://github.com/fishaudio/fish-audio-n8n/issues/42)) ([0c12a87](https://github.com/fishaudio/fish-audio-n8n/commit/0c12a874bc590d05836abbbbe0cbecef410c6f08))
+
 # [0.5.0](https://github.com/fishaudio/fish-audio-n8n/compare/v0.4.0...v0.5.0) (2026-11-27)
 
 
