@@ -34,7 +34,7 @@ The official n8n community node for [Fish Audio](https://fish.audio): text to sp
 | **Generate**   | Convert text to speech. Choose the model (S2.1 Pro is recommended), the voice, the output format (MP3, WAV, PCM or Opus) and options such as speed, volume, bitrate and sample rate. |
 | **Transcribe** | Convert speech to text. Choose the model (Transcribe 1 Pro is recommended) and the language, and get timestamps for each segment.                                                    |
 
-Transcribe 1 Pro marks speakers in `text` (for example `<|speaker:0|> Hello`) and returns them in `speaker_turns`.
+Transcribe 1 Pro marks speakers in `text` (for example `<|speaker:0|> Hello`) and, with Include Timestamps on, returns them in `speaker_turns`.
 
 ### Voice Model
 
@@ -88,9 +88,9 @@ This works on any n8n, including n8n Cloud.
    4. Give the new node the old node's name. Expressions such as `$('Fish Audio')` refer to a node by name.
 3. If the workflow is published, **publish** it again (in n8n 1.x, save it while it is active). Saving alone changes only the draft: the published workflow keeps using the old node until you publish. If the workflow is not published, just save it; publishing would turn it on.
 4. Run the workflow once to check it.
-5. Uninstall `n8n-nodes-fishaudio` only when no workflow uses it **and** no execution that started before your change is still running or waiting (for example at a Wait node or a form). Such an execution continues with the old node when it resumes. Retrying an old execution with its original workflow, or restoring an older workflow version, also needs the old package.
+5. Uninstall `n8n-nodes-fishaudio` only when no workflow uses it **and** no execution that started before your change is still queued, running or waiting (for example at a Wait node or a form). Such an execution runs with the old node. Retrying an old execution with its original workflow, or restoring an older workflow version, also needs the old package.
 
-This guide covers only the editor. Don't use n8n's workflow export and import to move workflows: import unpublishes the workflows it imports and overwrites their saved state, such as a polling trigger's position.
+This guide covers only the editor. Don't use the `n8n export:workflow` and `n8n import:workflow` commands to move workflows: `import:workflow` unpublishes the workflows it imports and overwrites their saved state, such as a polling trigger's position.
 
 ## Resources
 
