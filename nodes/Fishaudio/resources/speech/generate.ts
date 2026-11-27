@@ -161,6 +161,15 @@ export const generateDescription: INodeProperties[] = [
 					'Characters per generation chunk (100 to 300). Lower values start faster, higher values sound more consistent.',
 			},
 			{
+				displayName: 'Language',
+				name: 'language',
+				type: 'string',
+				default: '',
+				placeholder: 'e.g. es-MX',
+				description:
+					'BCP-47 tag of the text\'s language, such as en, es-MX or zh-CN. It changes only how numbers, dates, units and symbols are read out, not the voice. Leave empty to detect the language of each part of the text. <a href="https://docs.fish.audio/features/text-to-speech#supported-normalization-languages">Supported languages</a>.',
+			},
+			{
 				displayName: 'Latency Mode',
 				name: 'latency',
 				type: 'options',
