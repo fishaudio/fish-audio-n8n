@@ -90,7 +90,7 @@ This works on any n8n, including n8n Cloud.
 4. Run the workflow once to check it.
 5. Uninstall `n8n-nodes-fishaudio` only when no workflow uses it **and** no execution that started before your change is still queued, running or waiting (for example at a Wait node or a form). Such an execution runs with the old node. Retrying an old execution with its original workflow, or restoring an older workflow version, also needs the old package.
 
-This guide covers only the editor. Don't use the `n8n export:workflow` and `n8n import:workflow` commands to move workflows: `import:workflow` unpublishes the workflows it imports and overwrites their saved state, such as a polling trigger's position.
+This guide covers only the editor. Don't use the `n8n export:workflow` and `n8n import:workflow` commands to move workflows: by default `import:workflow` unpublishes the workflows it imports, and it overwrites their saved state, such as a polling trigger's position.
 
 ## Resources
 
