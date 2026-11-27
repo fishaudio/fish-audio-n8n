@@ -41,6 +41,12 @@ jobs:
       - name: Run build
         run: npm run build
 
+      # The check n8n runs before it verifies a community node or accepts a new version.
+      # A local scan skips the provenance and attested-source checks, which need a
+      # published version.
+      - name: Run n8n community package scanner
+        run: npx --yes @n8n/scan-community-package@0.45.0 .
+
   release:
     needs: build
     if: github.event_name == 'workflow_dispatch' && inputs.release-type != 'build-only'
@@ -72,6 +78,11 @@ jobs:
         run: npx release-it --ci ${{ inputs.release-type }}
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+
+      # release-it has just changed the version. Build again so the published files carry
+      # it: the build copies package.json, and the User-Agent reads its version from there.
+      - name: Build the released version
+        run: npm run build
 
       - name: Publish to npm
         run: npm publish --ignore-scripts

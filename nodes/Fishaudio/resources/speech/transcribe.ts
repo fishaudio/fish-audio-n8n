@@ -7,6 +7,28 @@ const displayOptions = {
 	},
 };
 
+// Declared once per node version so that saved workflows keep the model they ran on:
+// n8n does not store a parameter whose value equals the default.
+const sttModelProperty: INodeProperties = {
+	displayName: 'Model',
+	name: 'sttModel',
+	type: 'options',
+	options: [
+		{
+			name: 'Transcribe 1 Pro (Recommended)',
+			value: 'transcribe-1-pro',
+			description: 'Recommended speech-to-text model',
+		},
+		{
+			name: 'Transcribe 1 (Retiring December 31, 2026)',
+			value: 'transcribe-1',
+			description: 'After December 31, 2026, requests are served by Transcribe 1 Pro',
+		},
+	],
+	default: 'transcribe-1-pro',
+	description: 'Speech-to-text model to use',
+};
+
 export const transcribeDescription: INodeProperties[] = [
 	{
 		displayName: 'Input Binary Field',
@@ -16,6 +38,16 @@ export const transcribeDescription: INodeProperties[] = [
 		required: true,
 		displayOptions,
 		description: 'The name of the input binary field containing the audio to transcribe',
+	},
+	{
+		...sttModelProperty,
+		default: 'transcribe-1',
+		displayOptions: { show: { ...displayOptions.show, '@version': [1, 1.1] } },
+	},
+	{
+		...sttModelProperty,
+		default: 'transcribe-1-pro',
+		displayOptions: { show: { ...displayOptions.show, '@version': [{ _cnd: { gte: 1.2 } }] } },
 	},
 	{
 		displayName: 'Options',

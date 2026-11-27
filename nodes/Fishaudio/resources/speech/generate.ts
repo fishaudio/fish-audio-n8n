@@ -14,9 +14,26 @@ const modelProperty: INodeProperties = {
 	displayName: 'Model',
 	name: 'model',
 	type: 'options',
-	// Ordered newest to oldest rather than alphabetically, so the recommended model comes first
-	// eslint-disable-next-line n8n-nodes-base/node-param-options-type-unsorted-items
+	// n8n's verification scanner requires alphabetical order and ignores eslint-disable comments.
+	// The default (S2.1 Pro) is preselected, so its position in the list doesn't matter.
 	options: [
+		{
+			name: 'Drama 3',
+			value: 'drama-3',
+			description:
+				'Model for voice direction and content creation. Billed at a higher rate than S2.1 Pro.',
+		},
+		{
+			name: 'S1 (Retiring December 31, 2026)',
+			value: 's1',
+			description:
+				'Deprecated. After December 31, 2026, requests are served by S2.1 Pro. Uses (parenthesis) emotion tags.',
+		},
+		{
+			name: 'S2 Pro',
+			value: 's2-pro',
+			description: 'Previous-generation S2 model',
+		},
 		{
 			name: 'S2.1 Pro (Recommended)',
 			value: 's2.1-pro',
@@ -29,30 +46,13 @@ const modelProperty: INodeProperties = {
 				'Same model as S2.1 Pro at no cost under fair-use limits, without latency guarantees. For testing and development.',
 		},
 		{
-			name: 'Drama 3',
-			value: 'drama-3',
-			description:
-				'Model for voice direction and content creation. Billed at a higher rate than S2.1 Pro.',
-		},
-		{
-			name: 'S2 Pro',
-			value: 's2-pro',
-			description: 'Previous-generation S2 model',
-		},
-		{
-			name: 'S1 (Retiring December 31, 2026)',
-			value: 's1',
-			description:
-				'Deprecated. After December 31, 2026, requests are served by S2.1 Pro. Uses (parenthesis) emotion tags.',
+			name: 'Speech 1.5 (Legacy)',
+			value: 'speech-1.5',
+			description: 'Deprecated since February 28, 2026. Kept so that saved workflows stay valid.',
 		},
 		{
 			name: 'Speech 1.6 (Legacy)',
 			value: 'speech-1.6',
-			description: 'Deprecated since February 28, 2026. Kept so that saved workflows stay valid.',
-		},
-		{
-			name: 'Speech 1.5 (Legacy)',
-			value: 'speech-1.5',
 			description: 'Deprecated since February 28, 2026. Kept so that saved workflows stay valid.',
 		},
 	],
@@ -149,6 +149,18 @@ export const generateDescription: INodeProperties[] = [
 		displayOptions,
 		options: [
 			{
+				displayName: 'Chunk Length',
+				name: 'chunkLength',
+				type: 'number',
+				typeOptions: {
+					minValue: 100,
+					maxValue: 300,
+				},
+				default: 300,
+				description:
+					'Characters per generation chunk (100 to 300). Lower values start faster, higher values sound more consistent.',
+			},
+			{
 				displayName: 'Latency Mode',
 				name: 'latency',
 				type: 'options',
@@ -160,11 +172,37 @@ export const generateDescription: INodeProperties[] = [
 				description: 'Trade-off between speed and quality',
 			},
 			{
+				displayName: 'MP3 Bitrate',
+				name: 'mp3Bitrate',
+				type: 'options',
+				options: [
+					{ name: '64 Kbps', value: 64 },
+					{ name: '128 Kbps', value: 128 },
+					{ name: '192 Kbps', value: 192 },
+				],
+				default: 128,
+				description: 'Bitrate of MP3 output. Used only when the output format is MP3.',
+			},
+			{
 				displayName: 'Normalize Text',
 				name: 'normalize',
 				type: 'boolean',
 				default: true,
 				description: 'Whether to normalize and clean the input text',
+			},
+			{
+				displayName: 'Opus Bitrate',
+				name: 'opusBitrate',
+				type: 'options',
+				options: [
+					{ name: '24 Kbps', value: 24 },
+					{ name: '32 Kbps', value: 32 },
+					{ name: '48 Kbps', value: 48 },
+					{ name: '64 Kbps', value: 64 },
+					{ name: 'Automatic', value: -1000 },
+				],
+				default: -1000,
+				description: 'Bitrate of Opus output. Used only when the output format is Opus.',
 			},
 			{
 				displayName: 'Sample Rate',
@@ -215,6 +253,18 @@ export const generateDescription: INodeProperties[] = [
 				},
 				default: 0.7,
 				description: 'Nucleus sampling parameter for token selection',
+			},
+			{
+				displayName: 'Volume',
+				name: 'volume',
+				type: 'number',
+				typeOptions: {
+					minValue: -20,
+					maxValue: 20,
+					numberPrecision: 1,
+				},
+				default: 0,
+				description: 'Volume change in decibels (-20 to 20). 0 leaves the volume unchanged.',
 			},
 		],
 	},

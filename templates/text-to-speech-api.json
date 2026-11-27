@@ -1,0 +1,65 @@
+{
+	"name": "Fish Audio: text to speech API",
+	"nodes": [
+		{
+			"parameters": {
+				"content": "## Text to speech API\nTurns a POST request into an MP3 file with Fish Audio.\n\n**Setup**\n1. Open **Receive text** and create a **Header Auth** credential: name `X-API-Key`, value a long random secret. Only callers who send that header can use the webhook, and with it your Fish Audio credits.\n2. Open **Generate speech** and select your Fish Audio credential (API key from https://fish.audio/app/api-keys).\n3. Publish (activate) the workflow.\n\n**Call it**\n```\ncurl -X POST <production webhook URL> \\\n  -H 'X-API-Key: <your secret>' \\\n  -H 'Content-Type: application/json' \\\n  -d '{\"text\": \"Hello from Fish Audio\"}' \\\n  -o speech.mp3\n```\nAdd `\"voice_id\"` to use a voice from https://fish.audio (the 32-character ID in the voice's URL). Without it, the default voice is used.",
+				"height": 520,
+				"width": 420
+			},
+			"id": "4a1b0b3e-1d7e-4c55-8d3c-0c6a8c1b2a01",
+			"name": "Sticky Note",
+			"type": "n8n-nodes-base.stickyNote",
+			"typeVersion": 1,
+			"position": [-200, -340]
+		},
+		{
+			"parameters": {
+				"httpMethod": "POST",
+				"path": "fish-audio-tts",
+				"authentication": "headerAuth",
+				"responseMode": "responseNode",
+				"options": {}
+			},
+			"id": "4a1b0b3e-1d7e-4c55-8d3c-0c6a8c1b2a02",
+			"name": "Receive text",
+			"type": "n8n-nodes-base.webhook",
+			"typeVersion": 2,
+			"position": [0, 160],
+			"webhookId": "8f0e6c55-5a7b-4a32-9a5e-0d2b6f1f7a10"
+		},
+		{
+			"parameters": {
+				"text": "={{ $json.body.text }}",
+				"voiceId": {
+					"__rl": true,
+					"mode": "id",
+					"value": "={{ $json.body.voice_id || '' }}"
+				},
+				"additionalOptions": {}
+			},
+			"id": "4a1b0b3e-1d7e-4c55-8d3c-0c6a8c1b2a03",
+			"name": "Generate speech",
+			"type": "@fishaudio/n8n-nodes-fishaudio.fishaudio",
+			"typeVersion": 1.2,
+			"position": [240, 160]
+		},
+		{
+			"parameters": {
+				"respondWith": "binary",
+				"options": {}
+			},
+			"id": "4a1b0b3e-1d7e-4c55-8d3c-0c6a8c1b2a04",
+			"name": "Return audio",
+			"type": "n8n-nodes-base.respondToWebhook",
+			"typeVersion": 1.1,
+			"position": [480, 160]
+		}
+	],
+	"connections": {
+		"Receive text": { "main": [[{ "node": "Generate speech", "type": "main", "index": 0 }]] },
+		"Generate speech": { "main": [[{ "node": "Return audio", "type": "main", "index": 0 }]] }
+	},
+	"settings": { "executionOrder": "v1" },
+	"pinData": {}
+}
